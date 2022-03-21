@@ -115,7 +115,7 @@ def get_suggests(user_id):
     # Выбираем две первые подсказки из массива.
     suggests = [
         {'title': suggest, 'hide': True}
-        for suggest in session['suggests'][:]
+        for suggest in session['suggests'][:2]
     ]
 
     # Убираем первую подсказку, чтобы подсказки менялись каждый раз.
@@ -127,6 +127,16 @@ def get_suggests(user_id):
     if len(suggests) < 2:
         suggests.append({
             "title": "Ладно",
+            "url": "https://market.yandex.ru/search?text=слон",
+            "hide": True
+        })
+        suggests.append({
+            "title": "Я покупаю",
+            "url": "https://market.yandex.ru/search?text=слон",
+            "hide": True
+        })
+        suggests.append({
+            "title": "Я куплю",
             "url": "https://market.yandex.ru/search?text=слон",
             "hide": True
         })
