@@ -61,7 +61,6 @@ def main():
 
 
 def handle_dialog(req, res):
-    global sessionStorage
     user_id = req['session']['user_id']
 
     if req['session']['new']:
@@ -100,7 +99,7 @@ def handle_dialog(req, res):
     ]:
         # Пользователь согласился, прощаемся.
         res['response']['text'] = 'Слона можно найти на Яндекс.Маркете!'
-        sessionStorage = {}
+        res['response']['end_session'] = False
         return buy_rabbit(request.json, res)
 
     # Если нет, то убеждаем его купить слона!
@@ -147,23 +146,11 @@ def get_suggests(user_id):
 def buy_rabbit(req, res):
     user_id = req['session']['user_id']
 
-    if not req['session']['new']:
-        # Это новый пользователь.
-        # Инициализируем сессию и поприветствуем его.
-        # Запишем подсказки, которые мы ему покажем в первый раз
 
-        sessionStorage[user_id] = {
-            'suggests': [
-                "Не хочу.",
-                "Не буду.",
-                "Отстань!",
-            ]
-        }
-        # Заполняем текст ответа
-        res['response']['text'] = 'Привет! Купи кролика!'
+
+    res['response']['text'] = 'Привет! Купи кролика!'
         # Получим подсказки
-        res['response']['buttons'] = get_suggests_rabbit(user_id)
-        return
+    res['response']['buttons'] = get_suggests_rabbit(user_id)
 
     # Сюда дойдем только, если пользователь не новый,
     # и разговор с Алисой уже был начат
