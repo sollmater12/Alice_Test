@@ -188,7 +188,7 @@ def buy_rabbit(req, res):
     # Если нет, то убеждаем его купить слона!
     res['response']['text'] = \
         f"Все говорят '{req['request']['original_utterance']}', а ты купи кролика!"
-    res['response']['buttons'] = get_suggests(user_id)
+    res['response']['buttons'] = get_suggests_rabbit(user_id)
 
 
 def get_suggests_rabbit(user_id):
