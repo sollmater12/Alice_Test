@@ -100,7 +100,7 @@ def handle_dialog(req, res):
         # Пользователь согласился, прощаемся.
         res['response']['text'] = 'Слона можно найти на Яндекс.Маркете!'
 
-        return buy_rabbit(request.json, res)
+        buy_rabbit(request.json, res)
 
     # Если нет, то убеждаем его купить слона!
     res['response']['text'] = \
