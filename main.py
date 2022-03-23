@@ -146,7 +146,7 @@ def get_suggests(user_id):
 def buy_rabbit(req, res):
     user_id = req['session']['user_id']
 
-    if not req['session']['new']:
+    if req['session']['new']:
         # Это новый пользователь.
         # Инициализируем сессию и поприветствуем его.
         # Запишем подсказки, которые мы ему покажем в первый раз
