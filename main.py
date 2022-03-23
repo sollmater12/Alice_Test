@@ -61,6 +61,7 @@ def main():
 
 
 def handle_dialog(req, res):
+    global sessionStorage
     user_id = req['session']['user_id']
 
     if req['session']['new']:
@@ -99,8 +100,8 @@ def handle_dialog(req, res):
     ]:
         # Пользователь согласился, прощаемся.
         res['response']['text'] = 'Слона можно найти на Яндекс.Маркете!'
-
-        buy_rabbit(request.json, res)
+        sessionStorage = {}
+        return buy_rabbit(request.json, res)
 
     # Если нет, то убеждаем его купить слона!
     res['response']['text'] = \
