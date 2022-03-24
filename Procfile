@@ -1,1 +1,1 @@
-web: python lesson2_task2.py
+web: python app.py
