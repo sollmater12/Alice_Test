@@ -1,10 +1,10 @@
 # импортируем библиотеки
-import os
-from flask import Flask, request
-import logging
-
 # библиотека, которая нам понадобится для работы с JSON
 import json
+import logging
+import os
+
+from flask import Flask, request
 
 # создаём приложение
 # мы передаём __name__, в нем содержится информация,
@@ -142,10 +142,11 @@ def get_suggests(user_id):
 
     return suggests
 
+
 def buy_rabbit(req, res, user_id):
     if not res['response']['new']:
         res['response']['text'] = 'Привет! Купи кролика!'
-            # Получим подсказки
+        # Получим подсказки
         res['response']['buttons'] = get_suggests_rabbit(user_id)
         return
 
@@ -207,7 +208,6 @@ def get_suggests_rabbit(user_id):
             "url": "https://market.yandex.ru/search?text=кролик",
             "hide": True
         })
-    suggests = suggests[-3:]
     return suggests
 
 
