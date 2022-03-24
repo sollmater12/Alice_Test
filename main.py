@@ -76,7 +76,7 @@ def handle_dialog(req, res):
             ]
         }
         # Заполняем текст ответа
-        res['response']['text'] = 'Привет! Купи сона!'
+        res['response']['text'] = 'Привет! Купи слона!'
         # Получим подсказки
         res['response']['buttons'] = get_suggests(user_id)
         return
@@ -145,8 +145,6 @@ def get_suggests(user_id):
 
 def buy_rabbit(req, res):
     user_id = req['session']['user_id']
-
-
 
     res['response']['text'] = 'Привет! Купи кролика!'
         # Получим подсказки
