@@ -99,7 +99,6 @@ def handle_dialog(req, res):
     ]:
         # Пользователь согласился, прощаемся.
         res['response']['text'] = 'Слона можно найти на Яндекс.Маркете!'
-        res['response']['end_session'] = False
         return buy_rabbit(request.json, res, user_id)
 
     # Если нет, то убеждаем его купить слона!
