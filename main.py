@@ -143,9 +143,11 @@ def get_suggests(user_id):
     return suggests
 
 def buy_rabbit(req, res, user_id):
-    res['response']['text'] = 'Привет! Купи кролика!'
-        # Получим подсказки
-    res['response']['buttons'] = get_suggests_rabbit(user_id)
+    if not res['response']['new']:
+        res['response']['text'] = 'Привет! Купи кролика!'
+            # Получим подсказки
+        res['response']['buttons'] = get_suggests_rabbit(user_id)
+        return
 
     # Сюда дойдем только, если пользователь не новый,
     # и разговор с Алисой уже был начат
@@ -205,7 +207,7 @@ def get_suggests_rabbit(user_id):
             "url": "https://market.yandex.ru/search?text=кролик",
             "hide": True
         })
-
+    suggests = suggests[-3:]
     return suggests
 
 
