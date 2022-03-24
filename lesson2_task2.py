@@ -63,7 +63,7 @@ def handle_dialog(res, req):
                     'hide': True
                 },
                 {
-                    'title':'Помощь',
+                    'title': 'Помощь',
                     'hide': True
                 }
             ]
@@ -153,7 +153,13 @@ def play_game(res, req):
             res['response']['text'] = 'Правильно! Сыграем ещё?'
             sessionStorage[user_id]['guessed_cities'].append(city)
             sessionStorage[user_id]['game_started'] = False
-            return
+            res['response']['buttons'] = [
+                {
+                    'title': 'Помощь',
+                    'hide': True
+                }
+            ]
+
         else:
             # если нет
             if attempt == 3:
