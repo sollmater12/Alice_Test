@@ -1,10 +1,10 @@
 # импортируем библиотеки
-import os
-from flask import Flask, request
-import logging
-
 # библиотека, которая нам понадобится для работы с JSON
 import json
+import logging
+import os
+
+from flask import Flask, request
 
 # создаём приложение
 # мы передаём __name__, в нем содержится информация,
@@ -93,12 +93,13 @@ def handle_dialog(req, res):
         'ладно',
         'куплю',
         'покупаю',
-        'хорошо'
+        'хорошо',
+        'Я покупаю',
+        'Я куплю'
     ]:
         # Пользователь согласился, прощаемся.
         res['response']['text'] = 'Слона можно найти на Яндекс.Маркете!'
-        res['response']['end_session'] = True
-        return
+        return buy_rabbit(request.json, res, user_id)
 
     # Если нет, то убеждаем его купить слона!
     res['response']['text'] = \
@@ -128,7 +129,85 @@ def get_suggests(user_id):
             "url": "https://market.yandex.ru/search?text=слон",
             "hide": True
         })
+        suggests.append({
+            "title": "Я покупаю",
+            "url": "https://market.yandex.ru/search?text=слон",
+            "hide": True
+        })
+        suggests.append({
+            "title": "Я куплю",
+            "url": "https://market.yandex.ru/search?text=слон",
+            "hide": True
+        })
 
+    return suggests
+
+
+def buy_rabbit(req, res, user_id):
+    if res['response']['new']:
+        res['response']['text'] = 'Привет! Купи кролика!'
+        # Получим подсказки
+        res['response']['buttons'] = get_suggests_rabbit(user_id)
+        return
+
+    # Сюда дойдем только, если пользователь не новый,
+    # и разговор с Алисой уже был начат
+    # Обрабатываем ответ пользователя.
+    # В req['request']['original_utterance'] лежит весь текст,
+    # что нам прислал пользователь
+    # Если он написал 'ладно', 'куплю', 'покупаю', 'хорошо',
+    # то мы считаем, что пользователь согласился.
+    # Подумайте, всё ли в этом фрагменте написано "красиво"?
+    if req['request']['original_utterance'].lower() in [
+        'ладно',
+        'куплю',
+        'покупаю',
+        'хорошо',
+        'Я покупаю',
+        'Я куплю'
+    ]:
+        # Пользователь согласился, прощаемся.
+        res['response']['text'] = 'Кролика можно найти на Яндекс.Маркете!'
+        res['response']['end_session'] = True
+        return
+
+    # Если нет, то убеждаем его купить слона!
+    res['response']['text'] = \
+        f"Все говорят '{req['request']['original_utterance']}', а ты купи кролика!"
+    res['response']['buttons'] = get_suggests_rabbit(user_id)
+
+
+def get_suggests_rabbit(user_id):
+    session = sessionStorage[user_id]
+
+    # Выбираем две первые подсказки из массива.
+    suggests = [
+        {'title': suggest, 'hide': True}
+        for suggest in session['suggests'][:2]
+    ]
+
+    # Убираем первую подсказку, чтобы подсказки менялись каждый раз.
+    session['suggests'] = session['suggests'][1:]
+    sessionStorage[user_id] = session
+
+    # Если осталась только одна подсказка, предлагаем подсказку
+    # со ссылкой на Яндекс.Маркет.
+    if len(suggests) < 2:
+        suggests.append({
+            "title": "Ладно",
+            "url": "https://market.yandex.ru/search?text=кролик",
+            "hide": True
+        })
+        suggests.append({
+            "title": "Я покупаю",
+            "url": "https://market.yandex.ru/search?text=кролик",
+            "hide": True
+        })
+        suggests.append({
+            "title": "Я куплю",
+            "url": "https://market.yandex.ru/search?text=кролик",
+            "hide": True
+        })
     return suggests
 
 
