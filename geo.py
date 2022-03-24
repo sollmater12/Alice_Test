@@ -36,6 +36,9 @@ def get_country(city):
             'GeocoderMetaData'][
             'AddressDetails']['Country']['CountryName']
 
+def get_geo_info(city_name, type_info):
+    pass
+
 
 def get_distance(p1, p2):
     R = 6373.0
