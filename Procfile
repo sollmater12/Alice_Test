@@ -1,1 +1,1 @@
-web: python main.py
+web: python lesson2_task1.py
