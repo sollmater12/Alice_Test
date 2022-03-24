@@ -155,6 +155,14 @@ def play_game(res, req):
             sessionStorage[user_id]['game_started'] = False
             res['response']['buttons'] = [
                 {
+                    'title': 'Да',
+                    'hide': True
+                },
+                {
+                    'title': 'Нет',
+                    'hide': True
+                },
+                {
                     'title': 'Помощь',
                     'hide': True
                 }
