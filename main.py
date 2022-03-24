@@ -144,7 +144,7 @@ def get_suggests(user_id):
 
 
 def buy_rabbit(req, res, user_id):
-    if not res['response']['new']:
+    if res['response']['new']:
         res['response']['text'] = 'Привет! Купи кролика!'
         # Получим подсказки
         res['response']['buttons'] = get_suggests_rabbit(user_id)
