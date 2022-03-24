@@ -100,7 +100,7 @@ def handle_dialog(req, res):
         # Пользователь согласился, прощаемся.
         res['response']['text'] = 'Слона можно найти на Яндекс.Маркете!'
         res['response']['end_session'] = False
-        return buy_rabbit(request.json, res)
+        return buy_rabbit(request.json, res, user_id)
 
     # Если нет, то убеждаем его купить слона!
     res['response']['text'] = \
@@ -143,9 +143,7 @@ def get_suggests(user_id):
 
     return suggests
 
-def buy_rabbit(req, res):
-    user_id = req['session']['user_id']
-
+def buy_rabbit(req, res, user_id):
     res['response']['text'] = 'Привет! Купи кролика!'
         # Получим подсказки
     res['response']['buttons'] = get_suggests_rabbit(user_id)
