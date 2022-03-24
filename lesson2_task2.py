@@ -159,7 +159,7 @@ def play_game(res, req):
                     'hide': True
                 }
             ]
-
+            return
         else:
             # если нет
             if attempt == 3:
